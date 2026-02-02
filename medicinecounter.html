@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <title>බෙහෙත් ගණනය කිරීම</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 320px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 15px;
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>බෙහෙත් ගණනය කිරීම</h2>
+
+    <label>බෙහෙත් පටන්ගන්න දිනය</label>
+    <input type="date" id="startDate">
+
+    <label>බෙහෙත් අවසන් වන දිනය</label>
+    <input type="date" id="endDate">
+
+    <label>දවසකට ගතයුතු පෙති ගණන</label>
+    <input type="number" id="perDay" min="1">
+
+    <button onclick="calculate()">ගණනය කරන්න</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculate() {
+        const start = new Date(document.getElementById("startDate").value);
+        const end = new Date(document.getElementById("endDate").value);
+        const perDay = parseInt(document.getElementById("perDay").value);
+
+        if (!start || !end || !perDay) {
+            document.getElementById("result").innerHTML = "කරුණාකර සියලු දත්ත ඇතුළත් කරන්න.";
+            return;
+        }
+
+        const timeDiff = end - start;
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+
+        if (days <= 0) {
+            document.getElementById("result").innerHTML = "දිනයන් නිවැරදිව ඇතුළත් කරන්න.";
+            return;
+        }
+
+        const totalTablets = days * perDay;
+
+        document.getElementById("result").innerHTML =
+            `📅 මුළු දින ගණන: <b>${days}</b><br>
+             💊 මුළු අවශ්‍ය පෙති ගණන: <b>${totalTablets}</b>`;
+    }
+</script>
+
+</body>
+</html>
